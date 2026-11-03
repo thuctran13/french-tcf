@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Français TCF — B1/B2</title>
+<style>
+:root{
+  --green:#166534; --green-dark:#14532d; --green-soft:#e7f4ec; --ink:#1c2420;
+  --grey:#6b7280; --line:#e2e8e4; --bg:#f5f8f6; --amber:#b45309; --red:#b91c1c;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg); color:var(--ink); font-size:17px; line-height:1.45;}
+header{background:var(--green-dark); color:#fff; padding:14px 16px 12px; position:sticky; top:0; z-index:5;}
+header h1{margin:0; font-size:20px; font-weight:700;}
+header .sub{font-size:13px; opacity:.85; margin-top:2px;}
+main{padding:14px 14px 96px; max-width:640px; margin:0 auto;}
+.stats{display:flex; gap:8px; margin:2px 0 14px;}
+.stat{flex:1; background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 6px; text-align:center;}
+.stat b{display:block; font-size:19px; color:var(--green-dark);}
+.stat span{font-size:12px; color:var(--grey);}
+.progressbar{height:8px; background:var(--line); border-radius:99px; overflow:hidden; margin:0 0 14px;}
+.progressbar i{display:block; height:100%; background:var(--green); width:0%; transition:width .3s;}
+.card{background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px; margin:0 0 12px;}
+.card.done{opacity:.75;}
+.wtop{display:flex; align-items:flex-start; gap:8px;}
+.word{font-size:25px; font-weight:700; color:var(--green-dark); flex:1; word-break:break-word;}
+.badge{font-size:11px; font-weight:700; padding:3px 8px; border-radius:99px; color:#fff; white-space:nowrap;}
+.b1{background:#2f9e5f;} .b2{background:#b45309;}
+.pos{font-size:13px; color:var(--grey); font-style:italic;}
+.spk{border:1px solid var(--line); background:var(--green-soft); color:var(--green-dark);
+  border-radius:10px; font-size:17px; min-width:46px; height:46px; cursor:pointer;}
+.reveal{margin-top:10px; border-top:1px dashed var(--line); padding-top:10px; display:none;}
+.card.open .reveal{display:block;}
+.gloss{font-size:18px; font-weight:600;}
+.synline{margin-top:4px; font-size:15px; color:var(--green-dark);}
+.ex{margin-top:8px; font-size:16px;}
+.ex .en{display:block; color:var(--grey); font-size:15px; margin-top:2px;}
+.hint{margin-top:10px; font-size:13px; color:var(--grey);}
+.card.open .hint{display:none;}
+.state{margin-top:10px; font-size:14px; font-weight:700;}
+.state.ok{color:var(--green);} .state.ko{color:var(--red);}
+.qtype{margin-top:12px; font-size:13px; font-weight:700; letter-spacing:.02em; color:var(--amber); text-transform:uppercase;}
+.qtext{font-size:17px; font-weight:600; margin:2px 0 10px;}
+.opts{display:flex; flex-direction:column; gap:8px;}
+.opt{display:block; width:100%; text-align:left; background:#fff; border:2px solid var(--line);
+  border-radius:12px; padding:13px 14px; font-size:17px; color:var(--ink); cursor:pointer; min-height:52px;}
+.opt.correct{background:var(--green-soft); border-color:var(--green); font-weight:700;}
+.opt.wrong{background:#fdecec; border-color:var(--red); font-weight:700;}
+.opt.dim{opacity:.55;}
+.opt[disabled]{cursor:default;}
+.fb{margin-top:10px; font-size:16px; font-weight:700; display:none;}
+.fb.ok{color:var(--green);} .fb.ko{color:var(--red);}
+.summary{background:var(--green-soft); border:1px solid var(--green); border-radius:14px;
+  padding:16px; margin:0 0 14px; text-align:center;}
+.summary b{font-size:20px; color:var(--green-dark); display:block; margin-bottom:4px;}
+.bigbtn{display:block; width:100%; background:var(--green); color:#fff; border:0; border-radius:12px;
+  padding:15px; font-size:17px; font-weight:700; cursor:pointer; min-height:54px; margin:0 0 12px;}
+.ghostbtn{display:block; width:100%; background:#fff; color:var(--green-dark); border:2px solid var(--green);
+  border-radius:12px; padding:13px; font-size:16px; font-weight:700; cursor:pointer; min-height:52px; margin:0 0 10px;}
+.topic{display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:#fff;
+  border:1px solid var(--line); border-radius:14px; padding:16px 14px; margin:0 0 10px;
+  font-size:18px; font-weight:600; color:var(--ink); cursor:pointer; min-height:56px;}
+.topic small{margin-left:auto; color:var(--grey); font-weight:400; font-size:14px; white-space:nowrap;}
+.back{display:inline-block; margin:0 0 12px; background:none; border:0; color:var(--green);
+  font-size:16px; font-weight:700; cursor:pointer; padding:8px 0; min-height:44px;}
+h2.sec{font-size:19px; color:var(--green-dark); margin:20px 0 10px;}
+h3.sub2{font-size:16px; color:var(--ink); margin:14px 0 8px;}
+.pat .fr{font-size:19px; font-weight:700; color:var(--green-dark);}
+.pat .en{color:var(--grey); font-size:15px; margin-top:2px;}
+.pat .ex{font-style:italic;}
+.note{font-size:13px; color:var(--grey); margin:6px 0 12px;}
+.tools{display:flex; gap:10px; margin-top:18px;}
+.tools button,.tools label{flex:1; text-align:center; background:#fff; border:1px solid var(--line);
+  border-radius:12px; padding:13px 6px; font-size:15px; font-weight:600; color:var(--green-dark); cursor:pointer;}
+footer{max-width:640px; margin:0 auto; padding:0 14px 90px; font-size:12px; color:var(--grey);}
+nav.tabs{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid var(--line);
+  display:flex; z-index:10; padding-bottom:env(safe-area-inset-bottom);}
+nav.tabs button{flex:1; background:none; border:0; padding:10px 4px 12px; font-size:13px;
+  color:var(--grey); cursor:pointer; min-height:58px;}
+nav.tabs button .ic{display:block; font-size:21px; line-height:1.2;}
+nav.tabs button.on{color:var(--green-dark); font-weight:700;}
+.empty{background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px; text-align:center; color:var(--grey);}
+</style>
+</head>
+<body>
+<header>
+  <h1>🇫🇷 Français TCF · B1/B2</h1>
+  <div class="sub" id="hdr-sub">Les mots du jour</div>
+</header>
+<main id="view"></main>
+<footer>Données : FLELex (UCLouvain, niveaux CECR) · FreeDict fra-eng (définitions) · Tatoeba (exemples, CC-BY) · WOLF / Inria et Wiktionnaire (synonymes). Progression enregistrée sur cet appareil uniquement.</footer>
+<nav class="tabs">
+  <button id="tab-today" class="on" onclick="showTab('today')"><span class="ic">📅</span>Aujourd'hui</button>
+  <button id="tab-topics" onclick="showTab('topics')"><span class="ic">🗂️</span>Thèmes</button>
+  <button id="tab-write" onclick="showTab('write')"><span class="ic">✍️</span>Écrire</button>
+</nav>
+<input type="file" id="importFile" accept=".json,application/json" style="display:none">
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
